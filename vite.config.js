@@ -3,18 +3,20 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/admin/",
+  base: "/",
   build: {
+    sourcemap: true,
+    minify: false,
     rollupOptions: {
       output: {
         // Set the chunk size limit here in bytes (e.g., 500 KB)
-        chunkFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: "assets/[name]-[hash].js",
         manualChunks(id) {
-          if (id.includes('node_modules')) {
+          if (id.includes("node_modules")) {
             return id
               .toString()
-              .split('node_modules/')[1]
-              .split('/')[0]
+              .split("node_modules/")[1]
+              .split("/")[0]
               .toString();
           }
         },

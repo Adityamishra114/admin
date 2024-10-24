@@ -1,14 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { url } from "../config";
-import JoditEditor from "jodit-react";
+// import JoditEditor from "jodit-react";
 // import ColorPicker from "./ColorPicker";
 import { useNavigate, useParams } from "react-router-dom";
+import { RichTextEditor } from "./RichEditor";
 const EditCarForm = () => {
   const { id: carId } = useParams();
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState("");
+  // const [content, setContent] = useState("");
   const navigate = useNavigate();
-  const editor = useRef(null);
+  // const editor = useRef(null);
   const [carData, setCarData] = useState({
     title: "",
     owner: {
@@ -65,15 +66,15 @@ const EditCarForm = () => {
   console.log('Editing car with ID:', carId); 
 
 
-  useEffect(() => {
-    if (carData.description) {
-      setContent(carData.description);
-    }
-  }, [carData.description]);
-  const handleEditorChange = (newContent) => {
-    setContent(newContent);
-    carData.description = newContent;
-  };
+  // useEffect(() => {
+  //   if (carData.description) {
+  //     setContent(carData.description);
+  //   }
+  // }, [carData.description]);
+  // const handleEditorChange = (newContent) => {
+  //   setContent(newContent);
+  //   carData.description = newContent;
+  // };
 
   // const handleColorChange = (newColor) => {
   //   setFormData({ ...formData, color: newColor });
@@ -84,7 +85,14 @@ const EditCarForm = () => {
   const [videoPreviews, setVideoPreviews] = useState([]);
   const photoInputRef = useRef(null);
   const videoInputRef = useRef(null);
+  const handleChangeD = (value) => {
+    setCarData((prevData) => ({
+      ...prevData,
+      description: value,
+    }));
+  };
 
+  console.log(carData.description);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,7 +108,6 @@ const EditCarForm = () => {
       setCarData({ ...carData, [name]: value });
     }
   };
-
   const handleFileChange = (e, type) => {
     const files = Array.from(e.target.files);
     if (type === "photos") {
@@ -138,8 +145,7 @@ const EditCarForm = () => {
       formData.append("location", carData.location);
       formData.append("rentalDuration", carData.rentalDuration);
       formData.append(
-        "additionalAmenities",
-        JSON.stringify(carData.additionalAmenities)
+        "additionalAmenities",(carData.additionalAmenities)
       );
       formData.append(
         "specialOptionsForWedding",(carData.specialOptionsForWedding)
@@ -318,7 +324,7 @@ const EditCarForm = () => {
            {Array.isArray(photoPreviews) && photoPreviews.map((src, index) => (
             <img
               key={index}
-              src={src}
+              src={`${url}${src}`}
               alt={`preview ${index}`}
               className="w-full h-32 object-cover rounded"
             />
@@ -346,7 +352,7 @@ const EditCarForm = () => {
               controls
               className="w-full h-32 object-cover rounded"
             >
-              <source src={src} type="video/mp4" />
+              <source src={`${url}${src}`} type="video/mp4" />
             </video>
           ))}
         </div>
@@ -534,17 +540,24 @@ const EditCarForm = () => {
         >
           Description
         </label>
-        <JoditEditor
+        {/* <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
+        /> */}
+         <RichTextEditor
+          name="description"
+          required
+          value={carData.description}
+          onChange={handleChangeD}
+          className="w-full border border-gray-300 rounded"
         />
         {/* <textarea
           name="description"
           required
-          value={formData.description}
+          value={carData.description}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded"
         /> */}

@@ -113,17 +113,10 @@ const DecorationLists = () => {
             <b className="flex-1">Actions</b>
           </div>
           {list.map((item, index) => {
-            console.log(item.photos[0]);
-
             return (
               <div key={index} className="list-table-format">
                 {item.photos && item.photos.length > 0 ? (
-                  <img
-                    src={item.photos[0]}
-                    onError={() =>
-                      console.error(`Failed to load image at ${item.photos[0]}`)
-                    }
-                  />
+                  <img src={`${url}${item.photos[0]}`} />
                 ) : (
                   <p>No image available</p>
                 )}

@@ -113,7 +113,7 @@ const CarList = () => {
             return (
               <div key={index} className="list-table-format">
                 {item.photos && item.photos.length > 0 ? (
-                  <img src={item.photos[0]}  />
+                  <img src={`${url}${item.photos[0]}`}  />
                 ) : (
                   <p>No image available</p>
                 )}

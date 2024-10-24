@@ -1,13 +1,14 @@
 import { useEffect, useState, useRef } from "react";
 import { url } from "../config";
-import JoditEditor from "jodit-react";
+// import JoditEditor from "jodit-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { RichTextEditor } from "./RichEditor";
 const DecorEdit = () => {
   const { id: decorId } = useParams();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
+  // const editor = useRef(null);
+  // const [content, setContent] = useState("");
   const [decorData, setDecorData] = useState({
     title: "",
     owner: {
@@ -25,15 +26,15 @@ const DecorEdit = () => {
     isVerified: false,
   });
 
-  useEffect(() => {
-    if (decorData.description) {
-      setContent(decorData.description);
-    }
-  }, [decorData.description]);
-  const handleEditorChange = (newContent) => {
-    setContent(newContent);
-    decorData.description = newContent;
-  };
+  // useEffect(() => {
+  //   if (decorData.description) {
+  //     setContent(decorData.description);
+  //   }
+  // }, [decorData.description]);
+  // const handleEditorChange = (newContent) => {
+  //   setContent(newContent);
+  //   decorData.description = newContent;
+  // };
 
   const [error, setError] = useState("");
   const [photoPreviews, setPhotoPreviews] = useState([]);
@@ -285,7 +286,7 @@ const DecorEdit = () => {
             photoPreviews.map((src, index) => (
               <img
                 key={index}
-                src={src}
+                src={`${url}${src}`}
                 alt={`preview ${index}`}
                 className="w-full h-32 object-cover rounded"
               />
@@ -314,7 +315,7 @@ const DecorEdit = () => {
                 controls
                 className="w-full h-32 object-cover rounded"
               >
-                <source src={src} type="video/mp4" />
+                <source  src={`${url}${src}`} type="video/mp4" />
               </video>
             ))}
         </div>
@@ -356,17 +357,24 @@ const DecorEdit = () => {
         <label className="block text-gray-700 mb-1" htmlFor="description">
           Description
         </label>
-        <JoditEditor
+        {/* <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
+        /> */}
+         <RichTextEditor
+         name="description"
+         required
+         value={decorData.description}
+           onChange={handleChange}
+          className="w-full border border-gray-300 rounded"
         />
         {/* <textarea
           name="description"
           required
-          value={formData.description}
+          value={decorData.description}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded"
         /> */}

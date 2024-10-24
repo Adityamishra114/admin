@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url } from "../config";
-import JoditEditor from "jodit-react";
+// import JoditEditor from "jodit-react";
+import { RichTextEditor } from "./RichEditor";
 // import ColorPicker from "./ColorPicker";
 const CarForm = () => {
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
+  // const editor = useRef(null);
+  // const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,15 +38,15 @@ const CarForm = () => {
     isVerified: false,
   });
 
-  useEffect(() => {
-    if (carData.description) {
-      setContent(carData.description);
-    }
-  }, [carData.description]);
-  const handleEditorChange = (newContent) => {
-    setContent(newContent);
-    carData.description = newContent;
-  };
+  // useEffect(() => {
+  //   if (carData.description) {
+  //     setContent(carData.description);
+  //   }
+  // }, [carData.description]);
+  // const handleEditorChange = (newContent) => {
+  //   setContent(newContent);
+  //   carData.description = newContent;
+  // };
 
   const [photoPreviews, setPhotoPreviews] = useState([]);
   const [videoPreviews, setVideoPreviews] = useState([]);
@@ -64,6 +65,7 @@ const CarForm = () => {
   // const handleColorChange = (newColor) => {
   //   setFormData({ ...formData, color: newColor });
   // };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -154,13 +156,10 @@ const CarForm = () => {
       formData.append("rentalPrice", carData.rentalPrice);
       formData.append("location", carData.location);
       formData.append("rentalDuration", carData.rentalDuration);
-      formData.append(
-        "additionalAmenities",
-        JSON.stringify(carData.additionalAmenities)
-      );
+      formData.append("additionalAmenities", carData.additionalAmenities);
       formData.append(
         "specialOptionsForWedding",
-        JSON.stringify(carData.specialOptionsForWedding)
+        carData.specialOptionsForWedding
       );
       formData.append("description", carData.description);
       formData.append("isVerified", carData.isVerified);
@@ -195,7 +194,7 @@ const CarForm = () => {
 
       const result = await response.json();
       console.log("Car created successfully:", result);
-      localStorage.removeItem('carFormData');
+      localStorage.removeItem("carFormData");
       navigate("/cars-list");
     } catch (error) {
       console.error("Fetch error:", error);
@@ -546,17 +545,25 @@ const CarForm = () => {
         >
           Description
         </label>
-        <JoditEditor
+        {/* <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
+        /> */}
+
+        <RichTextEditor
+          name="description"
+          required
+          value={carData.description}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded"
         />
         {/* <textarea
           name="description"
           required
-          value={formData.description}
+          value={carData.description}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded"
         /> */}

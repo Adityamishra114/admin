@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url } from "../config";
-import JoditEditor from "jodit-react";
+// import JoditEditor from "jodit-react";
 import { useParams } from "react-router-dom";
+import { RichTextEditor } from "./RichEditor";
 const DecorationForm = () => {
   const { id: decorId } = useParams();
   const [loading, setLoading] = useState(false);
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
+  // const editor = useRef(null);
+  // const [content, setContent] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -56,15 +57,15 @@ const DecorationForm = () => {
 
 
 
-  useEffect(() => {
-    if (decorData.description) {
-      setContent(decorData.description);
-    }
-  }, [decorData.description]);
-  const handleEditorChange = (newContent) => {
-    setContent(newContent);
-    decorData.description = newContent;
-  };
+  // useEffect(() => {
+  //   if (decorData.description) {
+  //     setContent(decorData.description);
+  //   }
+  // }, [decorData.description]);
+  // const handleEditorChange = (newContent) => {
+  //   setContent(newContent);
+  //   decorData.description = newContent;
+  // };
 
 
 
@@ -404,17 +405,24 @@ const DecorationForm = () => {
         <label className="block text-gray-700 mb-1" htmlFor="description">
           Description
         </label>
-        <JoditEditor
+        {/* <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
+        /> */}
+         <RichTextEditor
+         name="description"
+         required
+         value={decorData.description}
+           onChange={handleChange}
+          className="w-full border border-gray-300 rounded"
         />
         {/* <textarea
           name="description"
           required
-          value={formData.description}
+          value={decorData.description}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded"
         /> */}
