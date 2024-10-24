@@ -23,8 +23,4 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000, // Warning limit for chunk size
   },
-  server: {
-    host: '0.0.0.0', 
-    port: import.meta.env.PORT || 5173, 
-  },
 });
