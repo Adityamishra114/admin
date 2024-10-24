@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { url } from "../config";
-// import JoditEditor from "jodit-react";
-import { RichTextEditor } from "./RichEditor";
+import JoditEditor from "jodit-react";
+// import { RichTextEditor } from "./RichEditor";
 // import ColorPicker from "./ColorPicker";
 const CarForm = () => {
-  // const editor = useRef(null);
-  // const [content, setContent] = useState("");
+  const editor = useRef(null);
+  const [content, setContent] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -38,15 +38,15 @@ const CarForm = () => {
     isVerified: false,
   });
 
-  // useEffect(() => {
-  //   if (carData.description) {
-  //     setContent(carData.description);
-  //   }
-  // }, [carData.description]);
-  // const handleEditorChange = (newContent) => {
-  //   setContent(newContent);
-  //   carData.description = newContent;
-  // };
+  useEffect(() => {
+    if (carData.description) {
+      setContent(carData.description);
+    }
+  }, [carData.description]);
+  const handleEditorChange = (newContent) => {
+    setContent(newContent);
+    carData.description = newContent;
+  };
 
   const [photoPreviews, setPhotoPreviews] = useState([]);
   const [videoPreviews, setVideoPreviews] = useState([]);
@@ -545,21 +545,21 @@ const CarForm = () => {
         >
           Description
         </label>
-        {/* <JoditEditor
+        <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
-        /> */}
+        />
 
-        <RichTextEditor
+        {/* <RichTextEditor
           name="description"
           required
           value={carData.description}
           onChange={handleChange}
           className="w-full border border-gray-300 rounded"
-        />
+        /> */}
         {/* <textarea
           name="description"
           required

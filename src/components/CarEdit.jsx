@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { url } from "../config";
-// import JoditEditor from "jodit-react";
+import JoditEditor from "jodit-react";
 // import ColorPicker from "./ColorPicker";
 import { useNavigate, useParams } from "react-router-dom";
-import { RichTextEditor } from "./RichEditor";
+// import { RichTextEditor } from "./RichEditor";
 const EditCarForm = () => {
   const { id: carId } = useParams();
   const [loading, setLoading] = useState(false);
-  // const [content, setContent] = useState("");
+  const [content, setContent] = useState("");
   const navigate = useNavigate();
-  // const editor = useRef(null);
+  const editor = useRef(null);
   const [carData, setCarData] = useState({
     title: "",
     owner: {
@@ -66,15 +66,15 @@ const EditCarForm = () => {
   console.log('Editing car with ID:', carId); 
 
 
-  // useEffect(() => {
-  //   if (carData.description) {
-  //     setContent(carData.description);
-  //   }
-  // }, [carData.description]);
-  // const handleEditorChange = (newContent) => {
-  //   setContent(newContent);
-  //   carData.description = newContent;
-  // };
+  useEffect(() => {
+    if (carData.description) {
+      setContent(carData.description);
+    }
+  }, [carData.description]);
+  const handleEditorChange = (newContent) => {
+    setContent(newContent);
+    carData.description = newContent;
+  };
 
   // const handleColorChange = (newColor) => {
   //   setFormData({ ...formData, color: newColor });
@@ -85,12 +85,12 @@ const EditCarForm = () => {
   const [videoPreviews, setVideoPreviews] = useState([]);
   const photoInputRef = useRef(null);
   const videoInputRef = useRef(null);
-  const handleChangeD = (value) => {
-    setCarData((prevData) => ({
-      ...prevData,
-      description: value,
-    }));
-  };
+  // const handleChangeD = (value) => {
+  //   setCarData((prevData) => ({
+  //     ...prevData,
+  //     description: value,
+  //   }));
+  // };
 
   console.log(carData.description);
 
@@ -540,20 +540,20 @@ const EditCarForm = () => {
         >
           Description
         </label>
-        {/* <JoditEditor
+        <JoditEditor
           ref={editor}
           value={content}
           tabIndex={1}
           onChange={handleEditorChange}
           className="w-full border border-gray-300 rounded"
-        /> */}
-         <RichTextEditor
+        />
+         {/* <RichTextEditor
           name="description"
           required
           value={carData.description}
           onChange={handleChangeD}
           className="w-full border border-gray-300 rounded"
-        />
+        /> */}
         {/* <textarea
           name="description"
           required

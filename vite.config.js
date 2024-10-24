@@ -9,7 +9,6 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       output: {
-        // Set the chunk size limit here in bytes (e.g., 500 KB)
         chunkFileNames: "assets/[name]-[hash].js",
         manualChunks(id) {
           if (id.includes("node_modules")) {
@@ -22,7 +21,10 @@ export default defineConfig({
         },
       },
     },
-    // Optionally, you can specify a larger chunk size limit (default is 500 KB)
-    chunkSizeWarningLimit: 1000, // Set to 1000 KB or any size you prefer
+    chunkSizeWarningLimit: 1000, // Warning limit for chunk size
+  },
+  server: {
+    host: '0.0.0.0', 
+    port: import.meta.env.PORT || 5173, 
   },
 });
